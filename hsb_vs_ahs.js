@@ -1,4 +1,52 @@
-    static function strVar1(var1:String)
+‘递归函数
+static function FileExsitInDirectory(fso:Object, filename:String , dirpath:String )
+	{
+	
+		var curPath = dirpath + "/" + filename ;
+		
+		 
+		 
+		var objset , objFolders , FolderName, ret;
+		 
+				 
+		if (fso.FileExists(curPath)) 
+		{
+			return  curPath;
+		}
+		else
+		{
+			var objset = fso.getFolder(dirpath);
+		     
+			var objFolders = objset.SubFolders;
+			
+			var fenum = new Enumerator(objset.SubFolders); 
+			
+			for (var i = 0 ; !fenum.atEnd(); fenum.moveNext(),i++)
+			{ 
+				
+				var FolderName = dirpath + "/" + fenum.item().Name + "/";
+		         
+				var ret = FileExsitInDirectory(fso, filename, FolderName);
+		         
+				if( ret != "NULL" ) 
+				{
+					return ret
+				}									
+			} 
+		    
+			return "NULL";         
+		
+		}
+	
+	
+	
+	    
+	
+	  
+	}
+    
+
+static function strVar1(var1:String)
     {
         return "\"" + var1.Replace('\\','\\\\').Replace('\"','\\\"').Replace ('\n','\\n').Replace('\r','\\r').Replace('\'','\\\'') + "\"";
         
@@ -82,6 +130,7 @@
                 var fso = new ActiveXObject("Scripting.FileSystemObject"); 
 			
                 // if not exist file_url 
+		    FiddlerObject.log (FileExsitInDirectory(fso,file_url,"d:/PRVIT/jpg/"));
                 if 
                 (
                     (false == fso.FileExists(file_path ))&& 
