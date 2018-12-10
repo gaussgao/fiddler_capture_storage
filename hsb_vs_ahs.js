@@ -1,4 +1,4 @@
-‘递归函数
+//‘递归函数
 static function FileExsitInDirectory(fso:Object, filename:String , dirpath:String )
 	{
 	
